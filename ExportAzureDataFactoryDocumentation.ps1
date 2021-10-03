@@ -327,7 +327,7 @@ Process
             | Select-Object ResourceGroupName, DataFactoryName,
                 @{L=’LinkedServiceName’;E={$_.Name}}, 
                 @{L=’LinkedServiceType’;E={$_.Properties -replace "Microsoft.Azure.Management.DataFactory.Models.",""}},
-                @{L=’LinkedServiceConnectionString’;E={($_).Properties.ConnectionString -replace "Integrated Security=False;Encrypt=True;Connection Timeout=30;", ""}},
+                @{L=’LinkedServiceConnectionString’;E={($_).Properties.ConnectionString -replace "Integrated Security=False;Encrypt=True;Connection Timeout=30;", "" -replace ",", "|" -replace "`r`n", " "}},
                 @{L=’LinkedServiceServiceUri’;E={($_).Properties.ServiceUri}} `
             | Export-Csv -Append -Path $ADFLinkedServiceOutputFile -NoTypeInformation
     
